@@ -1,0 +1,12 @@
+{
+  "type":[
+    {
+      "id": 1,
+      "name": "multiple"
+    },
+    {
+      "id": 2,
+      "name": "other"
+    }
+  ]
+}

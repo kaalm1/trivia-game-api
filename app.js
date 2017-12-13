@@ -5,8 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var connection = require('./channels/game')
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+var games = require('./routes/games')
 
 var app = express();
 
@@ -24,6 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/games',games);
+app.use('/games/new',games);
+app.use('/games/giphy/:words',games);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,5 +48,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
