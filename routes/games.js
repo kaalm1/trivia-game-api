@@ -11,6 +11,7 @@ var promise = mongoose.connect(MONGO_URL, {
 });
 var Schema = mongoose.Schema;
 const https = require('https');
+var request = require('request');
 
 var userSchema = new Schema({
   email: String,
@@ -103,11 +104,9 @@ router.post('/new', function(req, res, next) {
 
 router.get('/giphy/:words', function(req, res, next) {
   let words = req.params.words
-  let url = `https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_KEY}&tag=${words}&rating=G`
-  https.get(url,(r)=>res.send(r))
-  .on('error', (e) => {
-    res.send(e)
-  });
+  let key = process.env.GIPHY_KEY
+  let url = `https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=${words}&rating=G`
+  request(url,(error,response,body)=>{res.send(JSON.parse(body))})
 });
 
 module.exports = router;
